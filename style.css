@@ -1,0 +1,183 @@
+/*<--------------------------Core Layout Settings----------------------------------> */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 40px 20px;
+    background-color: #333538;
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+/*<--------------------------Filter Controls----------------------------------> */
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.filters button {
+    padding: 10px 24px;
+    border: none;
+    background-color: #ffffff;
+    color: #495057;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.filters button:hover,
+.filters button.active {
+    background-color: #212529;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.filters button:active {
+    transform: translateY(0);
+}
+
+
+/*<--------------------------Responsive Gallery Grid----------------------------------> */
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/*<--------------------------Grid Item Transition Styles----------------------------------> */
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+
+
+    /*<--------------------------Hidden state properties before entry animation runs----------------------------------> */
+    opacity: 0;
+    transform: scale(0.85);
+    display: none;
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+}
+
+/*<--------------------------Active class applied via JS script----------------------------------> */
+
+
+.gallery-item.show {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+}
+
+/*<--------------------------Card Image Details and Zoom Effect----------------------------------> */
+
+
+.gallery-item img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+    transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.06);
+}
+
+/*<--------------------------Lightbox Modal Structure----------------------------------> */
+
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 17, 20, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    /*<--------------------------Start fully transparent and ignore user interactions----------------------------------> */
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+/*<--------------------------Fades in the backdrop wrapper----------------------------------> */
+
+.lightbox.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/*<--------------------------Pop-in Zoom Effect for Main Image----------------------------------> */
+
+.lightbox-img {
+    max-width: 85%;
+    max-height: 80%;
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+
+    /*<--------------------------Elastic scaling entry----------------------------------> */
+
+    transform: scale(0.75);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
+}
+
+.lightbox.open .lightbox-img {
+    transform: scale(1);
+}
+
+    /*<--------------------------Action Control Icons----------------------------------> */
+
+.close,
+.prev,
+.next {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 35px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.close {
+    top: 25px;
+    right: 35px;
+    font-size: 45px;
+}
+
+.prev {
+    left: 30px;
+}
+
+.next {
+    right: 30px;
+}
+
+.close:hover,
+.prev:hover,
+.next:hover {
+    color: #ffffff;
+    transform: scale(1.15);
+}
