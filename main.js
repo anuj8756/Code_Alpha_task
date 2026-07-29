@@ -10,29 +10,22 @@ document.addEventListener("DOMContentLoaded", () => {
     let activeImages = [];
     let currentIndex = 0;
 
-    // <-------------------- 1. GALLERY FILTER IMPLEMENTATION --------------------->
+    
     function filterGallery(category) {
         galleryItems.forEach(item => {
             const isMatch = category === "all" || item.classList.contains(category);
             
-            if (isMatch) {
-                // <------------------------Ensure display configuration allows rendering--------------------------->
-                              
+            if (isMatch) {                                          
 
                 item.style.display = "block";
-
-               
-                // <-----------------------Let browser establish layout pipeline context before scaling visible element---------------------------------------->
-                
+          
+                          
                 setTimeout(() => {
                     item.classList.add("show");
                 }, 15);
             } else {
                 item.classList.remove("show");
-
-                // <-------------------Synchronize visibility termination sequence with style fade transitions--------------------------------->
-                
-                            setTimeout(() => {
+                setTimeout(() => {
                     if (!item.classList.contains("show")) {
                         item.style.display = "none";
                     }
@@ -40,8 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
         
-        // <---------------Refresh structural reference array containing current visible collection images-------------------->
-
         setTimeout(() => {
             activeImages = Array.from(galleryItems)
                 .filter(item => item.style.display === "block")
@@ -49,8 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 450);
     }
 
-    // <----------------------Initialize gallery to default active filter view configuration------------------->
-    filterGallery("all");
+       filterGallery("all");
 
     filterButtons.forEach(button => {
         button.addEventListener("click", () => {
@@ -60,9 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // <----------- 2. LIGHTBOX INTERACTIVITY CONTROL -------------->
-
-    galleryItems.forEach(item => {
+     galleryItems.forEach(item => {
         item.querySelector("img").addEventListener("click", (e) => {
             const clickedImg = e.target;
             currentIndex = activeImages.indexOf(clickedImg);
@@ -76,9 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         lightbox.classList.remove("open");
     }
 
-    // <---------------------Handles content change fading sequence for transition navigations----------------------->
-
-    function updateLightboxImage(newIndex) {
+      function updateLightboxImage(newIndex) {
         currentIndex = newIndex;
         lightboxImg.style.opacity = "0.3";
         
@@ -98,20 +84,16 @@ document.addEventListener("DOMContentLoaded", () => {
         updateLightboxImage(prevIdx);
     }
 
-    //<---------------------------- Event Bindings----------------------------->
-
-    closeBtn.addEventListener("click", closeLightbox);
+     closeBtn.addEventListener("click", closeLightbox);
     nextBtn.addEventListener("click", showNext);
     prevBtn.addEventListener("click", showPrev);
 
-    // <-----------------Close view automatically if click targets backdrop element areas----------------->
-
+  
     lightbox.addEventListener("click", (e) => {
         if (e.target === lightbox) closeLightbox();
     });
 
-    // <-----------------Keyboard bindings for cleaner UX-------------------->
-    
+   
     document.addEventListener("keydown", (e) => {
         if (!lightbox.classList.contains("open")) return;
         if (e.key === "Escape") closeLightbox();
